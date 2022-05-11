@@ -41,6 +41,7 @@ function App() {
     }
   return (
     <div className="App">
+      <h1>IA CHATBOT</h1>
       <form onSubmit={submitHandler}>
         <input type="text" value={query} onChange={onChangeHandler}/>
         <button type="submit">submit</button>
