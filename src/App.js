@@ -7,7 +7,7 @@ function App() {
   
   const [query,setQuery] = useState('')
   const [container, setContainer] = useState([])
-  
+  const [lastPoint, setLastPoint] = useState('')
   
   
   useEffect (() => {
@@ -20,26 +20,38 @@ function App() {
       }
     };
     
-    fetch(`https://acobot-brainshop-ai-v1.p.rapidapi.com/get?bid=178&key=sX5A2PcYZbsN5EY6&uid=mashape&msg=${query}`, options)
+    fetch(`https://acobot-brainshop-ai-v1.p.rapidapi.com/get?bid=178&key=sX5A2PcYZbsN5EY6&uid=mashape&msg= + ${query}`, options)
     .then(response => {
       return response.json(); 
     })
     .then(data =>{
-      setContainer(data)
+      setContainer([data])
     })
     .then(response => console.log(response))
     .catch(err => console.error(err));
-  }, [query])
+  }, [lastPoint])
     
     const onChangeHandler = e =>{
       setQuery(e.target.value)
     }
+
+    const submitHandler = e =>{
+      e.preventDefault();
+      setLastPoint(query)
+    }
   return (
     <div className="App">
-      <form action="">
+      <form onSubmit={submitHandler}>
         <input type="text" value={query} onChange={onChangeHandler}/>
         <button type="submit">submit</button>
       </form>
+      {container.map((item)=>{
+        return (
+          <div>
+            <p>{item.cnt}</p>
+          </div>
+        )
+      })}
     </div>
   );
 }
